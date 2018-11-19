@@ -15,7 +15,6 @@ namespace MainLibrary
     {
         public IEnumerable<Room> GetAllRooms()
         {
-            //check
             try
             {
                 string sql = string.Format("SELECT * FROM rooms");
