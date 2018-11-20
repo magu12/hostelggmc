@@ -16,6 +16,82 @@ namespace HostelGGMC
         StudentController studentController = new StudentController();
         RoomController roomController = new RoomController();
 
+        public void DoOperationsFilter()
+        {
+            var student = studentController.GetAllStudents();
+            IEnumerable<Student> result = new List<Student>();
+
+            dgStudent.Rows.Clear();
+
+            if (cbStage.SelectedIndex >= 0)
+            {
+                var filter =
+                from d in student
+                where d.Room.ToString()[0] == cbStage.SelectedItem.ToString()[0]
+                select d;
+                student = filter;
+            }
+            if (cbRoom.SelectedIndex >= 0 && cbStage.SelectedIndex >= 0)
+            {
+                var filter =
+                from d in student
+                where d.Room.ToString() == (cbStage.SelectedItem.ToString() + "-" + cbRoom.SelectedItem.ToString())
+                select d;
+                student = filter;
+            }
+            if (tbStudent.Text.Length >= 1)
+            {
+                var filter =
+                from d in student
+                where d.StudentName == tbStudent.Text
+                select d;
+                student = filter;
+            }
+            if (cbGroupName.SelectedIndex >= 0)
+            {
+                var filter =
+                from d in student
+                where d.GroupName.ToString() == cbGroupName.SelectedIndex.ToString()
+                select d;
+                student = filter;
+            }
+            if (tbGroupNomber.Text.Length >= 1)
+            {
+                var filter =
+                from d in student
+                where d.GroupNumber.ToString() == tbGroupNomber.Text
+                select d;
+                student = filter;
+            }
+            if (cbInhabited.Checked == true)
+            {
+                var filter =
+                from d in student
+                where d.Inhabited == 1
+                select d;
+                student = filter;
+            }
+            if (cbNotInhabited.Checked == true)
+            {
+                var filter =
+                from d in student
+                where d.Inhabited == 0
+                select d;
+                student = filter;
+            }
+            if (cbEvited.Checked == true)
+            {
+                var filter =
+                from d in student
+                where d.Envicted == 1
+                select d;
+                student = filter;
+            }
+            foreach (Student st in student)
+            {
+                dgStudent.Rows.Add(st.Id, st.StudentName, st.Room, st.Inhabited, st.Envicted, st.GroupName, st.GroupNumber, st.RoomType);
+            }
+        }
 
         public InhabitedAndEvictedForm()
         {
@@ -76,7 +152,8 @@ namespace HostelGGMC
         {
             if (cbStage.SelectedItem != null)
             {
-                var result = studentController.GetStudentsbByStage(cbStage.SelectedItem.ToString());
+                DoOperationsFilter();
+               /* var result = studentController.GetStudentsbByStage(cbStage.SelectedItem.ToString());
                 dgStudent.Rows.Clear();
                 foreach (Student student in result)
                 {
@@ -86,7 +163,7 @@ namespace HostelGGMC
                     if (student.RoomType == 0)
                         dgStudent.Rows.Add(student.Id, student.StudentName, student.Room,
                           student.Inhabited, student.Envicted, student.GroupName, student.GroupNumber, "Тройка");
-                }
+                }*/
             }
         }
 
@@ -94,6 +171,8 @@ namespace HostelGGMC
         {
             if (cbRoom.SelectedItem != null)
             {
+                DoOperationsFilter();
+                /*
                 var result = studentController.GetStudentsbByStage(cbStage.SelectedItem.ToString() + "-" + cbRoom.SelectedItem.ToString());
                 dgStudent.Rows.Clear();
                 foreach (Student student in result)
@@ -105,6 +184,7 @@ namespace HostelGGMC
                         dgStudent.Rows.Add(student.Id, student.StudentName, student.Room,
                           student.Inhabited, student.Envicted, student.GroupName, student.GroupNumber, "Тройка");
                 }
+                */
             }
         }
 
@@ -136,6 +216,8 @@ namespace HostelGGMC
         {
             if (tbStudent.Text != null)
             {
+                DoOperationsFilter();
+                /*
                 var result = studentController.GetStudentsByName(tbStudent.Text);
                 dgStudent.Rows.Clear();
                 try
@@ -150,7 +232,7 @@ namespace HostelGGMC
                               student.Inhabited, student.Envicted, student.GroupName, student.GroupNumber, "Тройка");
                     }
                 }
-                catch { }
+                catch { }*/
             }
         }
 
