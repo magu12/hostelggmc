@@ -51,14 +51,14 @@
             this.cbInhabited = new System.Windows.Forms.CheckBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.tbGroupNomber = new System.Windows.Forms.TextBox();
+            this.cbGroupName = new System.Windows.Forms.ComboBox();
+            this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.tbStudent = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.buttonEvicted = new System.Windows.Forms.Button();
-            this.label6 = new System.Windows.Forms.Label();
-            this.cbGroupName = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgStudent)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox5.SuspendLayout();
@@ -300,6 +300,32 @@
             this.tbGroupNomber.TabIndex = 11;
             this.tbGroupNomber.TextChanged += new System.EventHandler(this.tbGroupNomber_TextChanged);
             // 
+            // cbGroupName
+            // 
+            this.cbGroupName.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbGroupName.FormattingEnabled = true;
+            this.cbGroupName.Items.AddRange(new object[] {
+            "ПК",
+            "ПСК",
+            "ЭК",
+            "ЛЧС",
+            "ТОС",
+            "ТОМ"});
+            this.cbGroupName.Location = new System.Drawing.Point(6, 32);
+            this.cbGroupName.Name = "cbGroupName";
+            this.cbGroupName.Size = new System.Drawing.Size(108, 21);
+            this.cbGroupName.TabIndex = 8;
+            this.cbGroupName.SelectedIndexChanged += new System.EventHandler(this.cbGroupName_SelectedIndexChanged);
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(43, 16);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(42, 13);
+            this.label6.TabIndex = 10;
+            this.label6.Text = "Группа";
+            // 
             // label5
             // 
             this.label5.AutoSize = true;
@@ -327,6 +353,7 @@
             this.tbStudent.Size = new System.Drawing.Size(216, 20);
             this.tbStudent.TabIndex = 10;
             this.tbStudent.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+            this.tbStudent.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tbStudent_KeyDown);
             // 
             // label4
             // 
@@ -359,32 +386,6 @@
             this.buttonEvicted.Text = "Выселить";
             this.buttonEvicted.UseVisualStyleBackColor = true;
             this.buttonEvicted.Click += new System.EventHandler(this.buttonEvicted_Click);
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(43, 16);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(42, 13);
-            this.label6.TabIndex = 10;
-            this.label6.Text = "Группа";
-            // 
-            // cbGroupName
-            // 
-            this.cbGroupName.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbGroupName.FormattingEnabled = true;
-            this.cbGroupName.Items.AddRange(new object[] {
-            "ПК",
-            "ПСК",
-            "ЭК",
-            "ЛЧС",
-            "ТОС",
-            "ТОМ"});
-            this.cbGroupName.Location = new System.Drawing.Point(6, 32);
-            this.cbGroupName.Name = "cbGroupName";
-            this.cbGroupName.Size = new System.Drawing.Size(108, 21);
-            this.cbGroupName.TabIndex = 8;
-            this.cbGroupName.SelectedIndexChanged += new System.EventHandler(this.cbGroupName_SelectedIndexChanged);
             // 
             // InhabitedAndEvictedForm
             // 

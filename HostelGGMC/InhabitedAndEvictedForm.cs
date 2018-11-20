@@ -19,7 +19,6 @@ namespace HostelGGMC
         public void DoOperationsFilter()
         {
             var student = studentController.GetAllStudents();
-            IEnumerable<Student> result = new List<Student>();
 
             dgStudent.Rows.Clear();
 
@@ -43,7 +42,7 @@ namespace HostelGGMC
             {
                 var filter =
                 from d in student
-                where d.StudentName == tbStudent.Text
+                where d.StudentName.StartsWith(tbStudent.Text)
                 select d;
                 student = filter;
             }
@@ -51,7 +50,7 @@ namespace HostelGGMC
             {
                 var filter =
                 from d in student
-                where d.GroupName.ToString() == cbGroupName.SelectedIndex.ToString()
+                where d.GroupName.ToString() == cbGroupName.SelectedItem.ToString()
                 select d;
                 student = filter;
             }
@@ -59,7 +58,7 @@ namespace HostelGGMC
             {
                 var filter =
                 from d in student
-                where d.GroupNumber.ToString() == tbGroupNomber.Text
+                where d.GroupNumber.ToString().StartsWith(tbGroupNomber.Text)
                 select d;
                 student = filter;
             }
@@ -87,6 +86,9 @@ namespace HostelGGMC
                 select d;
                 student = filter;
             }
+
+
+
             foreach (Student st in student)
             {
                 dgStudent.Rows.Add(st.Id, st.StudentName, st.Room, st.Inhabited, st.Envicted, st.GroupName, st.GroupNumber, st.RoomType);
@@ -100,22 +102,30 @@ namespace HostelGGMC
 
         private void InhabitedAndEvictedForm_Load(object sender, EventArgs e)
         {
-            var result = studentController.GetAllStudents();
-            dgStudent.Rows.Clear();
-            foreach (Student student in result)
-            {
-                if (student.RoomType == 1)
-                    dgStudent.Rows.Add(student.Id, student.StudentName, student.Room,
-                       student.Inhabited, student.Envicted, student.GroupName, student.GroupNumber, "Двойка");
-                if (student.RoomType == 0)
-                    dgStudent.Rows.Add(student.Id, student.StudentName, student.Room,
-                      student.Inhabited, student.Envicted, student.GroupName, student.GroupNumber, "Тройка");
-            }
+            FillData();
         }
 
         private void dgStudent_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
 
+        }
+
+        public void FillData()
+        {
+            var result = studentController.GetAllStudents();
+            dgStudent.Rows.Clear();
+            foreach (Student student in result)
+            {
+                dgStudent.Rows.Add(student.Id, student.StudentName, student.Room,
+                   student.Inhabited, student.Envicted, student.GroupName, student.GroupNumber, ConvertRoomType(student.RoomType));
+            }
+        }
+
+        public string ConvertRoomType(byte bt)
+        {
+            if (bt == 1)
+                return "Двойка";
+            return "Тройка";
         }
 
         private void InhabitedAndEvictedForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -140,7 +150,7 @@ namespace HostelGGMC
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             DefaultForm();
-            InhabitedAndEvictedForm_Load(sender, e);
+            FillData();
         }
 
         private void cbStage_Enter(object sender, EventArgs e)
@@ -214,8 +224,6 @@ namespace HostelGGMC
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
-            if (tbStudent.Text != null)
-            {
                 DoOperationsFilter();
                 /*
                 var result = studentController.GetStudentsByName(tbStudent.Text);
@@ -233,7 +241,6 @@ namespace HostelGGMC
                     }
                 }
                 catch { }*/
-            }
         }
 
         private void buttonEvicted_Click(object sender, EventArgs e)
@@ -247,17 +254,7 @@ namespace HostelGGMC
         {
             if (cbGroupName.SelectedItem != null)
             {
-                var result = studentController.GetStudentsbByGroupName(cbGroupName.SelectedItem.ToString());
-                dgStudent.Rows.Clear();
-                foreach (Student student in result)
-                {
-                    if (student.RoomType == 1)
-                        dgStudent.Rows.Add(student.Id, student.StudentName, student.Room,
-                           student.Inhabited, student.Envicted, student.GroupName, student.GroupNumber, "Двойка");
-                    if (student.RoomType == 0)
-                        dgStudent.Rows.Add(student.Id, student.StudentName, student.Room,
-                          student.Inhabited, student.Envicted, student.GroupName, student.GroupNumber, "Тройка");
-                }
+                DoOperationsFilter();
             }
         }
 
@@ -265,21 +262,7 @@ namespace HostelGGMC
         {
             if (tbGroupNomber.Text != null && cbGroupName.SelectedItem != null)
             {
-                var result = studentController.GetStudentsbByGroupNameAndGroupNumber(cbGroupName.SelectedItem.ToString(), tbGroupNomber.Text);
-                dgStudent.Rows.Clear();
-                try
-                {
-                    foreach (Student student in result)
-                    {
-                        if (student.RoomType == 1)
-                            dgStudent.Rows.Add(student.Id, student.StudentName, student.Room,
-                               student.Inhabited, student.Envicted, student.GroupName, student.GroupNumber, "Двойка");
-                        if (student.RoomType == 0)
-                            dgStudent.Rows.Add(student.Id, student.StudentName, student.Room,
-                              student.Inhabited, student.Envicted, student.GroupName, student.GroupNumber, "Тройка");
-                    }
-                }
-                catch { }
+                DoOperationsFilter();
             }
         }
 
@@ -288,21 +271,7 @@ namespace HostelGGMC
             if (cbInhabited.Checked == true)
             {
                 cbNotInhabited.Checked = false; cbEvited.Checked = false;
-                var result = studentController.GetStudentsbByInhabited(1);
-                dgStudent.Rows.Clear();
-                try
-                {
-                    foreach (Student student in result)
-                    {
-                        if (student.RoomType == 1)
-                            dgStudent.Rows.Add(student.Id, student.StudentName, student.Room,
-                               student.Inhabited, student.Envicted, student.GroupName, student.GroupNumber, "Двойка");
-                        if (student.RoomType == 0)
-                            dgStudent.Rows.Add(student.Id, student.StudentName, student.Room,
-                              student.Inhabited, student.Envicted, student.GroupName, student.GroupNumber, "Тройка");
-                    }
-                }
-                catch { }
+                DoOperationsFilter();
             }
             else if (cbNotInhabited.Checked == false && cbEvited.Checked == false) { DefaultForm(); InhabitedAndEvictedForm_Load(sender, e); };
         }
@@ -311,22 +280,7 @@ namespace HostelGGMC
         {
             if (cbNotInhabited.Checked == true)
             {
-                cbInhabited.Checked = false; cbEvited.Checked = false;
-                var result = studentController.GetStudentsbByInhabited(0);
-                dgStudent.Rows.Clear();
-                try
-                {
-                    foreach (Student student in result)
-                    {
-                        if (student.RoomType == 1)
-                            dgStudent.Rows.Add(student.Id, student.StudentName, student.Room,
-                               student.Inhabited, student.Envicted, student.GroupName, student.GroupNumber, "Двойка");
-                        if (student.RoomType == 0)
-                            dgStudent.Rows.Add(student.Id, student.StudentName, student.Room,
-                              student.Inhabited, student.Envicted, student.GroupName, student.GroupNumber, "Тройка");
-                    }
-                }
-                catch { }
+                DoOperationsFilter();
             }
             else if (cbInhabited.Checked == false && cbEvited.Checked == false) { DefaultForm(); InhabitedAndEvictedForm_Load(sender, e); }
         }
@@ -335,24 +289,14 @@ namespace HostelGGMC
         {
             if (cbEvited.Checked == true)
             {
-                cbInhabited.Checked = false; cbNotInhabited.Checked = false;
-                var result = studentController.GetStudentsbByEnvicted(1);
-                dgStudent.Rows.Clear();
-                try
-                {
-                    foreach (Student student in result)
-                    {
-                        if (student.RoomType == 1)
-                            dgStudent.Rows.Add(student.Id, student.StudentName, student.Room,
-                               student.Inhabited, student.Envicted, student.GroupName, student.GroupNumber, "Двойка");
-                        if (student.RoomType == 0)
-                            dgStudent.Rows.Add(student.Id, student.StudentName, student.Room,
-                              student.Inhabited, student.Envicted, student.GroupName, student.GroupNumber, "Тройка");
-                    }
-                }
-                catch { }
+                DoOperationsFilter();
             }
             else if(cbNotInhabited.Checked == false && cbInhabited.Checked == false) { DefaultForm(); InhabitedAndEvictedForm_Load(sender, e); }
+        }
+
+        private void tbStudent_KeyDown(object sender, KeyEventArgs e)
+        {
+            DoOperationsFilter();
         }
     }
     
