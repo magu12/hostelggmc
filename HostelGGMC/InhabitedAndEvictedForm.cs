@@ -89,9 +89,14 @@ namespace HostelGGMC
 
 
 
-            foreach (Student st in student)
+            foreach (Student students in student)
             {
-                dgStudent.Rows.Add(st.Id, st.StudentName, st.Room, st.Inhabited, st.Envicted, st.GroupName, st.GroupNumber, st.RoomType);
+                if (students.RoomType == 1)
+                    dgStudent.Rows.Add(students.Id, students.StudentName, students.Room,
+                       students.Inhabited, students.Envicted, students.GroupName, students.GroupNumber, "Двойка");
+                if (students.RoomType == 0)
+                    dgStudent.Rows.Add(students.Id, students.StudentName, students.Room,
+                      students.Inhabited, students.Envicted, students.GroupName, students.GroupNumber, "Тройка");
             }
         }
 
@@ -260,7 +265,7 @@ namespace HostelGGMC
 
         private void tbGroupNomber_TextChanged(object sender, EventArgs e)
         {
-            if (tbGroupNomber.Text != null && cbGroupName.SelectedItem != null)
+            if (tbGroupNomber.Text != null)
             {
                 DoOperationsFilter();
             }
@@ -280,6 +285,7 @@ namespace HostelGGMC
         {
             if (cbNotInhabited.Checked == true)
             {
+                cbInhabited.Checked = false; cbEvited.Checked = false;
                 DoOperationsFilter();
             }
             else if (cbInhabited.Checked == false && cbEvited.Checked == false) { DefaultForm(); InhabitedAndEvictedForm_Load(sender, e); }
@@ -289,6 +295,7 @@ namespace HostelGGMC
         {
             if (cbEvited.Checked == true)
             {
+                cbInhabited.Checked = false; cbNotInhabited.Checked = false;
                 DoOperationsFilter();
             }
             else if(cbNotInhabited.Checked == false && cbInhabited.Checked == false) { DefaultForm(); InhabitedAndEvictedForm_Load(sender, e); }
