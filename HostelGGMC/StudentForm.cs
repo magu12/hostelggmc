@@ -88,16 +88,10 @@ namespace HostelGGMC
                 student = filter;
             }
 
-
-
             foreach (Student students in student)
             {
-                if (students.RoomType == 1)
-                    dgStudent.Rows.Add(students.Id, students.StudentName, students.Room,
-                       students.Inhabited, students.Envicted, students.GroupName, students.GroupNumber, "Двойка");
-                if (students.RoomType == 0)
-                    dgStudent.Rows.Add(students.Id, students.StudentName, students.Room,
-                      students.Inhabited, students.Envicted, students.GroupName, students.GroupNumber, "Тройка");
+                dgStudent.Rows.Add(students.Id, students.StudentName, students.Room,
+                  students.Inhabited, students.Envicted, students.GroupName, students.GroupNumber, ConvertRoomType(students.RoomType));
             }
         }
 
@@ -108,17 +102,24 @@ namespace HostelGGMC
 
         private void StudentForm_Load(object sender, EventArgs e)
         {
+            FillData();
+        }
+        public void FillData()
+        {
             var result = studentController.GetAllStudents();
             dgStudent.Rows.Clear();
             foreach (Student student in result)
             {
-                if (student.RoomType == 1)
-                    dgStudent.Rows.Add(student.Id, student.StudentName, student.Room,
-                       student.Inhabited, student.Envicted, student.GroupName, student.GroupNumber, "Двойка");
-                if (student.RoomType == 0)
-                    dgStudent.Rows.Add(student.Id, student.StudentName, student.Room,
-                      student.Inhabited, student.Envicted, student.GroupName, student.GroupNumber, "Тройка");
+                dgStudent.Rows.Add(student.Id, student.StudentName, student.Room,
+                   student.Inhabited, student.Envicted, student.GroupName, student.GroupNumber, ConvertRoomType(student.RoomType));
             }
+        }
+
+        public string ConvertRoomType(byte bt)
+        {
+            if (bt == 1)
+                return "Двойка";
+            return "Тройка";
         }
 
         private void DefaultForm()

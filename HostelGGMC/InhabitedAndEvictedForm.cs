@@ -91,12 +91,8 @@ namespace HostelGGMC
 
             foreach (Student students in student)
             {
-                if (students.RoomType == 1)
                     dgStudent.Rows.Add(students.Id, students.StudentName, students.Room,
-                       students.Inhabited, students.Envicted, students.GroupName, students.GroupNumber, "Двойка");
-                if (students.RoomType == 0)
-                    dgStudent.Rows.Add(students.Id, students.StudentName, students.Room,
-                      students.Inhabited, students.Envicted, students.GroupName, students.GroupNumber, "Тройка");
+                      students.Inhabited, students.Envicted, students.GroupName, students.GroupNumber, ConvertRoomType(students.RoomType));
             }
         }
 
