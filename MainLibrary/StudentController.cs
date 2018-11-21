@@ -13,6 +13,8 @@ namespace MainLibrary
 {
     public class StudentController
     {
+        GroupController groupController = new GroupController();
+
         public IEnumerable<Student> GetAllStudents()
         {
             try
@@ -60,6 +62,25 @@ namespace MainLibrary
                 {
                     con.Open();
                     var result = con.Query<Student>(sql);
+                    return result;
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.WriteLog(ex.Message);
+            }
+            return null;
+        }
+
+        public IEnumerable<Student> GetStudentsById(int id)
+        {
+            try
+            {
+                string sql = string.Format("SELECT * FROM students WHERE Id = @Id");
+                using (IDbConnection con = new MySqlConnection(ConfigurationManager.ConnectionStrings["con"].ConnectionString))
+                {
+                    con.Open();
+                    var result = con.Query<Student>(sql,new Student {Id = id });
                     return result;
                 }
             }
@@ -280,6 +301,75 @@ namespace MainLibrary
                 Log.WriteLog(ex.Message);
             }
             return null;
+        }
+
+        public void DoNewYear()
+        {
+            try
+            {
+                SetUnInhabitedToAll();
+                var groups = groupController.GetAllGroups();
+                var students = GetAllStudents();
+                foreach (Student stud in students)
+                {
+                    foreach(Group group in groups)
+                    {
+                        if(group.GroupName == stud.GroupName)
+                        {
+                            if (stud.GroupNumber.ToString()[0].ToString() == group.Courses.ToString())
+                            {
+                                DeleteStudent(stud.Id);
+                            }
+                            else
+                            {
+                                AddCourseForStudent(stud);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.WriteLog(ex.Message);
+            }
+        }
+
+        public int TakeCourse(int groupnumber)
+        {
+            string groupnum = groupnumber.ToString();
+            return Convert.ToInt32(groupnum[0]);
+        }
+
+        public void SetUnInhabitedToAll()
+        {
+            var students = GetAllStudents();
+
+            foreach (Student stud in students)
+            {
+                DelInhabitedById(stud.Id);
+            }
+        }
+
+        public void AddCourseForStudent(Student student)
+        {
+            try
+            {
+                string groupnumb = student.GroupNumber.ToString();
+                char[] arr = groupnumb.ToCharArray();
+                arr[0] = Convert.ToChar(Convert.ToInt32(arr[0]) + 1);
+                groupnumb = new string(arr);
+
+                student.GroupNumber = Convert.ToInt32(groupnumb);
+                using (IDbConnection con = new MySqlConnection(ConfigurationManager.ConnectionStrings["con"].ConnectionString))
+                {
+                    con.Open();
+                    con.Execute("UPDATE students SET GroupNumber = @GroupNumber WHERE Id = @Id", student);
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.WriteLog(ex.Message);
+            }
         }
     }
 }

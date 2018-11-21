@@ -71,7 +71,7 @@ namespace HostelGGMC
             {
                 if (roomController.StudentInRoomSearch(room) - 5 != 0)
                 { cbRoom.Items.Add(room.Number + " (Свободных мест - "+(5 - roomController.StudentInRoomSearch(room))+")"); }
-            };
+            }
            
         }
 

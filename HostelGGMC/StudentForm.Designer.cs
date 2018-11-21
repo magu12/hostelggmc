@@ -60,6 +60,7 @@
             this.lbDefault = new System.Windows.Forms.LinkLabel();
             this.buttonDeleteStudent = new System.Windows.Forms.Button();
             this.buttonAddStudent = new System.Windows.Forms.Button();
+            this.buttonChangeStudent = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgStudent)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox5.SuspendLayout();
@@ -92,7 +93,7 @@
             this.dgStudent.ReadOnly = true;
             this.dgStudent.RowHeadersVisible = false;
             this.dgStudent.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgStudent.Size = new System.Drawing.Size(827, 409);
+            this.dgStudent.Size = new System.Drawing.Size(827, 423);
             this.dgStudent.TabIndex = 4;
             // 
             // Column1
@@ -153,7 +154,7 @@
             this.groupBox1.Controls.Add(this.lbDefault);
             this.groupBox1.Location = new System.Drawing.Point(833, 0);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(240, 339);
+            this.groupBox1.Size = new System.Drawing.Size(240, 329);
             this.groupBox1.TabIndex = 12;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Параметры поиска:";
@@ -354,10 +355,11 @@
             this.lbDefault.TabIndex = 8;
             this.lbDefault.TabStop = true;
             this.lbDefault.Text = "Сбросить";
+            this.lbDefault.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lbDefault_LinkClicked);
             // 
             // buttonDeleteStudent
             // 
-            this.buttonDeleteStudent.Location = new System.Drawing.Point(833, 374);
+            this.buttonDeleteStudent.Location = new System.Drawing.Point(833, 393);
             this.buttonDeleteStudent.Name = "buttonDeleteStudent";
             this.buttonDeleteStudent.Size = new System.Drawing.Size(240, 23);
             this.buttonDeleteStudent.TabIndex = 15;
@@ -367,7 +369,7 @@
             // 
             // buttonAddStudent
             // 
-            this.buttonAddStudent.Location = new System.Drawing.Point(833, 345);
+            this.buttonAddStudent.Location = new System.Drawing.Point(833, 335);
             this.buttonAddStudent.Name = "buttonAddStudent";
             this.buttonAddStudent.Size = new System.Drawing.Size(240, 23);
             this.buttonAddStudent.TabIndex = 14;
@@ -375,11 +377,22 @@
             this.buttonAddStudent.UseVisualStyleBackColor = true;
             this.buttonAddStudent.Click += new System.EventHandler(this.buttonAddStudent_Click);
             // 
+            // buttonChangeStudent
+            // 
+            this.buttonChangeStudent.Location = new System.Drawing.Point(833, 364);
+            this.buttonChangeStudent.Name = "buttonChangeStudent";
+            this.buttonChangeStudent.Size = new System.Drawing.Size(240, 23);
+            this.buttonChangeStudent.TabIndex = 16;
+            this.buttonChangeStudent.Text = "Изменить";
+            this.buttonChangeStudent.UseVisualStyleBackColor = true;
+            this.buttonChangeStudent.Click += new System.EventHandler(this.buttonChangeStudent_Click);
+            // 
             // StudentForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1078, 409);
+            this.ClientSize = new System.Drawing.Size(1078, 423);
+            this.Controls.Add(this.buttonChangeStudent);
             this.Controls.Add(this.buttonDeleteStudent);
             this.Controls.Add(this.buttonAddStudent);
             this.Controls.Add(this.groupBox1);
@@ -437,5 +450,6 @@
         private System.Windows.Forms.LinkLabel lbDefault;
         private System.Windows.Forms.Button buttonDeleteStudent;
         private System.Windows.Forms.Button buttonAddStudent;
+        private System.Windows.Forms.Button buttonChangeStudent;
     }
 }

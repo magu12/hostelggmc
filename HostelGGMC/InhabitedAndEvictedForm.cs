@@ -301,6 +301,12 @@ namespace HostelGGMC
         {
             DoOperationsFilter();
         }
+
+        private void buttonEndStudyYear_Click(object sender, EventArgs e)
+        {
+            studentController.DoNewYear();
+            FillData();
+        }
     }
     
 }

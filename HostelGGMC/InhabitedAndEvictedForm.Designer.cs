@@ -219,6 +219,7 @@
             this.buttonEndStudyYear.TabIndex = 10;
             this.buttonEndStudyYear.Text = "Конец учебного года";
             this.buttonEndStudyYear.UseVisualStyleBackColor = true;
+            this.buttonEndStudyYear.Click += new System.EventHandler(this.buttonEndStudyYear_Click);
             // 
             // groupBox1
             // 

@@ -254,5 +254,16 @@ namespace HostelGGMC
 
             }
         }
+
+        private void lbDefault_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            DefaultForm();
+            FillData();
+        }
+
+        private void buttonChangeStudent_Click(object sender, EventArgs e)
+        {
+            int.Parse(dgStudent[0, dgStudent.SelectedRows[0].Index].Value.ToString()); //id
+        }
     }
 }
