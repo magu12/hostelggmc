@@ -180,10 +180,14 @@ namespace HostelGGMC
 
         private void cbRoom_Enter(object sender, EventArgs e)
         {
-            var rooms = roomController.RoomSearch(int.Parse(cbStage.SelectedItem.ToString()));
-            cbRoom.Items.Clear();
-            foreach (Room rm in rooms)
-                cbRoom.Items.Add(rm.Number);
+            try
+            {
+                var rooms = roomController.RoomSearch(int.Parse(cbStage.SelectedItem.ToString()));
+                cbRoom.Items.Clear();
+                foreach (Room rm in rooms)
+                    cbRoom.Items.Add(rm.Number);
+            }
+            catch { DialogResult dialogResult = MessageBox.Show("Перед выбором блока выберите этаж.", "Внимание", MessageBoxButtons.OK); }
         }
 
         private void tbStudent_TextChanged(object sender, EventArgs e)
@@ -263,7 +267,9 @@ namespace HostelGGMC
 
         private void buttonChangeStudent_Click(object sender, EventArgs e)
         {
-            int.Parse(dgStudent[0, dgStudent.SelectedRows[0].Index].Value.ToString()); //id
+            StudentChangeForm studentChangeForm = new StudentChangeForm(int.Parse(dgStudent[0, dgStudent.SelectedRows[0].Index].Value.ToString()));
+            studentChangeForm.ShowDialog();
+            StudentForm_Load(sender, e);
         }
     }
 }

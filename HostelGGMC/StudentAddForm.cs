@@ -65,14 +65,18 @@ namespace HostelGGMC
 
         private void comboBox2_Enter(object sender, EventArgs e)
         {
-            cbRoomType.Items.Clear();
-            var result = roomController.RoomSearch(int.Parse(cbStage.SelectedItem.ToString()));
-            foreach (Room room in result)
+            try
             {
-                if (roomController.StudentInRoomSearch(room) - 5 != 0)
-                { cbRoom.Items.Add(room.Number + " (Свободных мест - "+(5 - roomController.StudentInRoomSearch(room))+")"); }
+                cbRoomType.Items.Clear();
+                var result = roomController.RoomSearch(int.Parse(cbStage.SelectedItem.ToString()));
+                foreach (Room room in result)
+                {
+                    if (roomController.StudentInRoomSearch(room) - 5 != 0)
+                    { cbRoom.Items.Add(room.Number + " (Свободных мест - " + (5 - roomController.StudentInRoomSearch(room)) + ")"); }
+                }
             }
-           
+            catch { DialogResult dialogResult = MessageBox.Show("Перед выбором блока выберите этаж.", "Внимание", MessageBoxButtons.OK); }
+
         }
 
         private void cbGroup_Enter(object sender, EventArgs e)

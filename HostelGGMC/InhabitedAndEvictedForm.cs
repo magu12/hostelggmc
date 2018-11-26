@@ -201,10 +201,14 @@ namespace HostelGGMC
 
         private void cbRoom_Enter(object sender, EventArgs e)
         {
-            var rooms = roomController.RoomSearch(int.Parse(cbStage.SelectedItem.ToString()));
-            cbRoom.Items.Clear();
-            foreach (Room rm in rooms)
-                cbRoom.Items.Add(rm.Number);
+            try
+            {
+                var rooms = roomController.RoomSearch(int.Parse(cbStage.SelectedItem.ToString()));
+                cbRoom.Items.Clear();
+                foreach (Room rm in rooms)
+                    cbRoom.Items.Add(rm.Number);
+            }
+            catch { DialogResult dialogResult = MessageBox.Show("Перед выбором блока выберите этаж.", "Внимание", MessageBoxButtons.OK); }
         }
 
         private void button1_Click(object sender, EventArgs e)
